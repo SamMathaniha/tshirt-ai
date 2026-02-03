@@ -99,6 +99,17 @@
         <button onclick="autoCenter()">Auto Center</button>
         <button onclick="resetDesign()">Reset</button>
 
+        <button onclick="rotateLeft()">⟲ Rotate Left</button>
+        <button onclick="rotateRight()">⟳ Rotate Right</button>
+
+        <button onclick="showFront()">Front</button>
+        <button onclick="showBack()">Back</button>
+
+        <button onclick="saveDesign()">💾 Save Design</button>
+
+
+
+
 </div>
 
 
@@ -175,6 +186,58 @@ function autoFit() {
 
     autoCenter();
 }
+
+
+let currentRotation = 0;
+
+function rotateLeft() {
+    currentRotation -= 15;
+    design.style.transform = `rotate(${currentRotation}deg)`;
+}
+
+function rotateRight() {
+    currentRotation += 15;
+    design.style.transform = `rotate(${currentRotation}deg)`;
+}
+
+const tshirtBox = document.querySelector(".tshirt-box img");
+let isFront = true;
+
+function showFront() {
+    tshirtBox.src = "assets/tshirt.png"; // front view
+    isFront = true;
+}
+
+function showBack() {
+    tshirtBox.src = "assets/tshirt_back.png"; // back view
+    isFront = false;
+}
+
+
+function getDesignData() {
+    return {
+        img: design.src.split("/").pop(),
+        left: parseInt(design.style.left),
+        top: parseInt(design.style.top),
+        width: parseInt(design.style.width),
+        rotation: currentRotation,
+        view: isFront ? "front" : "back"
+    };
+}
+
+
+function saveDesign() {
+    const data = getDesignData();
+
+    fetch("save_design.php", {
+        method: "POST",
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(res => alert(res.status));
+}
+
+
 
 </script>
 
