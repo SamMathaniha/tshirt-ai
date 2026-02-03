@@ -41,7 +41,7 @@
         }
         #printArea {
             position: absolute;
-            top: 80px;
+            top: 55px;
             left: 70px;
             width: 160px;
             height: 220px;
@@ -94,6 +94,8 @@
 
         <!-- Control Buttons -->
         <br><br>
+        <button onclick="autoFit()">🔥 AI Auto Fit</button>
+
         <button onclick="autoCenter()">Auto Center</button>
         <button onclick="resetDesign()">Reset</button>
 
@@ -160,6 +162,20 @@ function resetDesign() {
     design.style.width = "120px";
     autoCenter();
 }
+
+function autoFit() {
+    const areaW = printArea.clientWidth;
+    const areaH = printArea.clientHeight;
+
+    const img = design;
+
+    const ratio = Math.min(areaW / img.naturalWidth, areaH / img.naturalHeight);
+
+    img.style.width = (img.naturalWidth * ratio) + "px";
+
+    autoCenter();
+}
+
 </script>
 
 
