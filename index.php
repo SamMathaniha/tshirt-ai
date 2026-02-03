@@ -107,6 +107,9 @@
 
         <button onclick="saveDesign()">💾 Save Design</button>
 
+        <button onclick="downloadMockup()">📥 Download Mockup</button>
+
+
 
 
 
@@ -237,6 +240,60 @@ function saveDesign() {
     .then(res => alert(res.status));
 }
 
+
+function downloadMockup() {
+    if (!design) return;
+
+    const tshirtRect = tshirtBox.getBoundingClientRect();
+    const printRect = printArea.getBoundingClientRect();
+
+    const scaleX = tshirtBox.naturalWidth / tshirtRect.width;
+    const scaleY = tshirtBox.naturalHeight / tshirtRect.height;
+
+    const canvas = document.createElement("canvas");
+    canvas.width = tshirtBox.naturalWidth;
+    canvas.height = tshirtBox.naturalHeight;
+    const ctx = canvas.getContext("2d");
+
+    // Draw T-shirt
+    const tshirtImg = new Image();
+    tshirtImg.src = tshirtBox.src;
+    tshirtImg.onload = () => {
+        ctx.drawImage(tshirtImg, 0, 0, canvas.width, canvas.height);
+
+        // Draw uploaded design
+        fetch(design.src)
+        .then(res => res.blob())
+        .then(blob => {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const designImg = new Image();
+                designImg.src = reader.result; // base64
+                designImg.onload = () => {
+                    ctx.save();
+
+                    // Calculate correct position relative to T-shirt
+                    const designX = (design.offsetLeft) * scaleX + (printRect.left - tshirtRect.left) * scaleX;
+                    const designY = (design.offsetTop) * scaleY + (printRect.top - tshirtRect.top) * scaleY;
+
+                    const w = parseInt(design.offsetWidth) * scaleX;
+                    const h = designImg.height * (w / designImg.width);
+
+                    ctx.translate(designX + w / 2, designY + h / 2);
+                    ctx.rotate(currentRotation * Math.PI / 180);
+                    ctx.drawImage(designImg, -w/2, -h/2, w, h);
+                    ctx.restore();
+
+                    const link = document.createElement("a");
+                    link.download = "tshirt_mockup.png";
+                    link.href = canvas.toDataURL();
+                    link.click();
+                };
+            };
+            reader.readAsDataURL(blob);
+        });
+    }
+}
 
 
 </script>
