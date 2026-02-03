@@ -1,0 +1,201 @@
+🧠 Final System Architecture (PHP + AI)
+
+Because you are using XAMPP, we’ll build like this:
+
+Browser (UI)
+   ↓ JavaScript (Canvas + Three.js)
+PHP Backend (XAMPP)
+   ↓ API call
+Python AI Server (Flask)
+   ↓
+AI Models (Image + Color + Mockup)
+
+
+So yes ✅ we WILL use Python — but separately.
+
+🧩 Features You Want (We’ll Build These)
+1️⃣ AI Design Generator 🤖
+What it does:
+
+User types: “cool lion design”
+
+AI generates a design image
+
+Show on T-shirt
+
+Tech Stack:
+
+Python + Stable Diffusion / OpenAI API
+
+Flask API
+
+PHP calls Python API
+
+Flow:
+User prompt → PHP → Python AI → Image → Show on T-shirt
+
+2️⃣ Smart Color Suggestions 🎨
+What it does:
+
+User uploads design
+
+AI suggests best T-shirt colors
+
+Example:
+
+Design colors: Black, Gold
+
+AI suggests: White, Black, Navy Blue
+
+Tech:
+
+Python + OpenCV + Color Palette AI
+
+Logic:
+
+Extract dominant colors from image
+
+Match with T-shirt color database
+
+Return suggestions
+
+3️⃣ Auto Mockup Generator 👕 (Most Important)
+What it does:
+
+Upload PNG design
+
+AI fits it automatically on T-shirt
+
+Realistic preview (3D)
+
+Tech:
+
+Frontend:
+
+HTML + JS + Canvas
+
+Three.js (3D T-shirt)
+
+Backend:
+
+PHP (upload + save)
+
+Python (auto fit + perspective warp)
+
+AI logic:
+
+Detect design area
+
+Resize & align
+
+Apply perspective + shadow
+
+🏗️ FULL DEVELOPMENT PLAN (STEP BY STEP)
+✅ STEP 1 — Setup XAMPP Project (PHP)
+
+Create project folder:
+
+C:\xampp\htdocs\tshirt-ai
+
+
+Structure:
+
+tshirt-ai/
+│── index.php
+│── upload.php
+│── ai.php
+│── assets/
+│── uploads/
+│── js/
+│── css/
+
+✅ STEP 2 — Basic Upload + Preview (NO AI yet)
+
+We start simple.
+
+index.php
+
+Upload design
+
+Show on T-shirt image (2D first)
+
+Goal:
+
+➡️ PNG appears on T-shirt image
+
+This is your foundation.
+
+✅ STEP 3 — Drag & Resize (Manual Control)
+
+Use JavaScript Canvas.
+
+Features:
+
+Drag design
+
+Resize
+
+Rotate
+
+This is like Canva.
+
+✅ STEP 4 — 3D T-shirt Preview 🧊
+
+Use Three.js.
+
+Features:
+
+3D model (.glb)
+
+Apply design texture
+
+Front / Back / Side view
+
+This is the core of your product 💎
+
+✅ STEP 5 — Add Python AI Server 🤖
+
+Now we add AI.
+
+Install Python + Flask
+
+Create folder:
+
+C:\ai-server
+
+
+Python file: app.py
+
+Functions:
+
+generate_design()
+
+suggest_colors()
+
+auto_mockup()
+
+Run server:
+
+python app.py
+
+✅ STEP 6 — Connect PHP ↔ Python
+
+PHP calls Python API.
+
+Example:
+PHP → http://localhost:5000/generate-design
+
+This is where AI comes alive 🔥
+
+✅ STEP 7 — AI Features Implementation
+🔥 AI Design Generator
+
+Text → Image
+
+🔥 Smart Color Suggestions
+
+Image → Colors
+
+🔥 Auto Mockup Generator
+
+Image → Fit on T-shirt
